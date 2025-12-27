@@ -1,0 +1,174 @@
+<!DOCTYPE html><html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy New Year 2026 🎉</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', 'Segoe UI', sans-serif;
+    }body {
+  height: 100vh;
+  background: radial-gradient(circle at top, #1b2735 0%, #090a0f 60%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  overflow: hidden;
+}
+
+/* Floating stars */
+body::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url('https://www.transparenttextures.com/patterns/stardust.png');
+  opacity: 0.35;
+  animation: drift 60s linear infinite;
+}
+
+@keyframes drift {
+  from { background-position: 0 0; }
+  to { background-position: 1000px 1000px; }
+}
+
+.container {
+  position: relative;
+  text-align: center;
+  padding: 50px 60px;
+  border-radius: 24px;
+  background: rgba(255,255,255,0.05);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 0 60px rgba(255, 215, 0, 0.15);
+  animation: fadeInUp 1.3s ease;
+}
+
+h1 {
+  font-size: 3.4rem;
+  margin-bottom: 25px;
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, #ffd89b, #facc15, #ff9a3c);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+button {
+  position: relative;
+  padding: 20px 56px;
+  font-size: 1.35rem;
+  border: none;
+  border-radius: 60px;
+  cursor: pointer;
+  background: linear-gradient(120deg, #ffdd00, #ff9f1c, #ff3d00);
+  background-size: 200% 200%;
+  color: #1a1a1a;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  box-shadow:
+    0 0 25px rgba(255, 221, 0, 0.7),
+    0 0 60px rgba(255, 120, 0, 0.6);
+  animation: gradientFlow 4s ease infinite, pulseGlow 2.2s ease-in-out infinite;
+  overflow: hidden;
+}
+
+button::before {
+  content: "";
+  position: absolute;
+  inset: -2px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.9), transparent);
+  transform: translateX(-100%);
+  animation: shimmer 3s infinite;
+}
+
+button:hover {
+  transform: translateY(-6px) scale(1.1);
+  box-shadow:
+    0 0 40px rgba(255, 221, 0, 1),
+    0 0 90px rgba(255, 80, 0, 0.9);
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 20px rgba(255,221,0,0.6), 0 0 50px rgba(255,120,0,0.5); }
+  50% { box-shadow: 0 0 35px rgba(255,221,0,1), 0 0 80px rgba(255,80,0,0.8); }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%); }
+  50% { transform: translateX(100%); }
+  100% { transform: translateX(100%); }
+}
+
+/* Overlay */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle, rgba(0,0,0,0.85), rgba(0,0,0,0.95));
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.gift-box {
+  width: 88%;
+  max-width: 850px;
+  background: #000;
+  padding: 18px;
+  border-radius: 20px;
+  box-shadow:
+    0 0 40px rgba(255,215,0,0.35),
+    0 0 80px rgba(255,140,0,0.25);
+  animation: popIn 0.45s ease;
+}
+
+video {
+  width: 100%;
+  border-radius: 14px;
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes popIn {
+  from { transform: scale(0.6); opacity: 0; }
+  to { transform: scale(1); opacity: 1; }
+}
+
+  </style>
+</head>
+<body>  <div class="container">
+    <h1>🎆 Happy New Year 2026 🎆</h1>
+    <button id="revealBtn">Click here to reveal your gift 🎁</button>
+  </div>  <div class="overlay" id="overlay">
+    <div class="gift-box">
+      <!-- Replace video.mp4 with your own video file -->
+      <video id="giftVideo" src="video.mp4" controls></video>
+    </div>
+  </div>  <script>
+    const revealBtn = document.getElementById('revealBtn');
+    const overlay = document.getElementById('overlay');
+    const video = document.getElementById('giftVideo');
+
+    revealBtn.addEventListener('click', () => {
+      overlay.style.display = 'flex';
+      video.currentTime = 0;
+      video.play();
+    });
+
+    // Automatically close overlay when video ends
+    video.addEventListener('ended', () => {
+      overlay.style.display = 'none';
+    });
+  </script></body>
+</html>
