@@ -1,40 +1,211 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Happy New Year 2026 🎉</title>
+  <title>Happy New Year 2026 🎆</title>
   <style>
-    * {
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap');
+
+    html, body {
       margin: 0;
       padding: 0;
-      box-sizing: border-box;
-      font-family: 'Poppins', 'Segoe UI', sans-serif;
-    }body {
-  height: 100vh;
-  background: radial-gradient(circle at top, #1b2735 0%, #090a0f 60%);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: #fff;
-  overflow: hidden;
-}
+      width: 100%;
+      height: 100%;
+      font-family: 'Poppins', sans-serif;
+      overflow: hidden;
+      background: #0a0f29;
+    }
 
-/* Floating stars */
-body::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: url('https://www.transparenttextures.com/patterns/stardust.png');
-  opacity: 0.35;
-  animation: drift 60s linear infinite;
-}
+    /* Particle background */
+    #particles {
+      position: fixed; top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 0;
+    }
 
-@keyframes drift {
-  from { background-position: 0 0; }
-  to { background-position: 1000px 1000px; }
-}
+    .hero {
+      position: relative;
+      z-index: 5;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      color: #fff;
+      text-align: center;
+      padding: 2rem;
+    }
 
-.container {
+    .hero h1 {
+      font-size: 4rem;
+      margin-bottom: 1rem;
+      background: linear-gradient(90deg, #ffd700, #ff5f7e, #00eaff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: glowText 2.5s ease infinite alternate;
+    }
+
+    @keyframes glowText {
+      from { text-shadow: 0 0 10px #fff, 0 0 20px #ff5f7e; }
+      to { text-shadow: 0 0 30px #ffd700, 0 0 50px #00eaff; }
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      color: #bfc7d1;
+    }
+
+    .btn {
+      padding: 18px 50px;
+      font-size: 1.3rem;
+      font-weight: 700;
+      color: #fff;
+      text-transform: uppercase;
+      border: none;
+      border-radius: 50px;
+      background: linear-gradient(135deg, #ff7e5f, #feb47b);
+      cursor: pointer;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(255,126,95,0.6), 0 0 40px rgba(254,180,123,0.5);
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-5px) scale(1.08);
+      box-shadow: 0 6px 25px rgba(255,126,95,0.9), 0 0 60px rgba(254,180,123,0.8);
+    }
+
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.9);
+      align-items: center;
+      justify-content: center;
+      z-index: 10;
+    }
+
+    .video-box {
+      width: 90%;
+      max-width: 900px;
+      border-radius: 18px;
+      box-shadow: 0 0 60px rgba(255,215,0,0.4), 0 0 90px rgba(0,255,255,0.2);
+      overflow: hidden;
+    }
+
+    video {
+      width: 100%;
+      border-radius: inherit;
+      display: block;
+    }
+
+    @media (max-width: 640px) {
+      .hero h1 { font-size: 2.8rem; }
+      .btn { font-size: 1.15rem; padding: 14px 40px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Background Particles -->
+  <canvas id="particles"></canvas>
+
+  <div class="hero">
+    <h1>🎇 Happy New Year 2026 🎇</h1>
+    <p>We’re so glad you’re here — click below to see your special gift!</p>
+    <button class="btn" id="revealBtn">Reveal Your Gift</button>
+  </div>
+
+  <div class="overlay" id="overlay">
+    <div class="video-box">
+      <video id="giftVideo" src="video.mp4" controls></video>
+    </div>
+  </div>
+
+  <script>
+    const revealBtn = document.getElementById('revealBtn');
+    const overlay = document.getElementById('overlay');
+    const video = document.getElementById('giftVideo');
+
+    // Show & play video when clicked
+    revealBtn.addEventListener('click', () => {
+      overlay.style.display = 'flex';
+      video.currentTime = 0;
+      video.play();
+    });
+
+    // Hide overlay automatically when video ends
+    video.addEventListener('ended', () => {
+      overlay.style.display = 'none';
+    });
+
+    // Particle background script
+    const canvas = document.getElementById("particles");
+    const ctx = canvas.getContext("2d");
+    let particlesArray;
+
+    canvas.width = innerWidth;
+    canvas.height = innerHeight;
+
+    const colors = ['#ffdd00', '#ff7300', '#00eaff', '#ffffff'];
+
+    class Particle {
+      constructor() {
+        this.x = Math.random() * canvas.width;
+        this.y = Math.random() * canvas.height;
+        this.size = (Math.random() * 2) + 1;
+        this.speedX = Math.random() * 1 - 0.5;
+        this.speedY = Math.random() * 1 - 0.5;
+        this.color = colors[Math.floor(Math.random() * colors.length)];
+      }
+      update() {
+        this.x += this.speedX;
+        this.y += this.speedY;
+        if (this.size > 0.2) this.size -= 0.02;
+      }
+      draw() {
+        ctx.fillStyle = this.color;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fill();
+      }
+    }
+
+    function initParticles() {
+      particlesArray = [];
+      for (let i = 0; i < 120; i++) {
+        particlesArray.push(new Particle());
+      }
+    }
+
+    function handleParticles() {
+      for (let i = 0; i < particlesArray.length; i++) {
+        particlesArray[i].update();
+        particlesArray[i].draw();
+        if (particlesArray[i].size <= 0.3) {
+          particlesArray.splice(i, 1);
+          particlesArray.push(new Particle());
+        }
+      }
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      handleParticles();
+      requestAnimationFrame(animate);
+    }
+
+    initParticles();
+    animate();
+
+  </script>
+
+</body>
+</html>.container {
   position: relative;
   text-align: center;
   padding: 50px 60px;
